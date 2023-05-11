@@ -4,7 +4,8 @@ import os
 
 from rpyc.utils.server import ThreadedServer
 
-DATA_DIR="/tmp/minion/"
+# DATA_DIR="/tmp/minion/" # for linux
+DATA_DIR="c:\\Users\\Boudhik Shaj\\Documents\\GitHub\\Distributed-File-System" # for windows
 
 class MinionService(rpyc.Service):
   class exposed_Minion():
@@ -25,8 +26,8 @@ class MinionService(rpyc.Service):
         return f.read()   
  
     def forward(self,block_uuid,data,minions):
-      print "8888: forwaring to:"
-      print block_uuid, minions
+      print ("8888: forwaring to:")
+      print (block_uuid, minions)
       minion=minions[0]
       minions=minions[1:]
       host,port=minion
@@ -41,4 +42,5 @@ class MinionService(rpyc.Service):
 if __name__ == "__main__":
   if not os.path.isdir(DATA_DIR): os.mkdir(DATA_DIR)
   t = ThreadedServer(MinionService, port = 8888)
+  print("running")
   t.start()

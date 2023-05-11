@@ -17,7 +17,7 @@ def int_handler(signal, frame):
 
 def set_conf():
   conf=configparser.ConfigParser()
-  conf.readfp(open('dfs.conf'))
+  conf.read_file(open('dfs.conf'))
   MasterService.exposed_Master.block_size = int(conf.get('master','block_size'))
   MasterService.exposed_Master.replication_factor = int(conf.get('master','replication_factor'))
   minions = conf.get('master','minions').split(',')
@@ -84,5 +84,6 @@ class MasterService(rpyc.Service):
 if __name__ == "__main__":
   set_conf()
   signal.signal(signal.SIGINT,int_handler)
-  t = ThreadedServer(MasterService, port = 2131)
+  t = ThreadedServer(MasterService, port = 2132)
+  print("running")
   t.start()
